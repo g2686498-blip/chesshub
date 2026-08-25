@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeToSite - 代码一键生成网站</title>
+  <meta name="description" content="粘贴或上传 HTML / CSS / JS 代码，即时预览并导出独立网站。纯前端，无服务器，可部署到 GitHub Pages。">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- JSZip for ZIP export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <!-- FileSaver for download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">◆</span>
+      <span class="logo-text">CodeToSite</span>
+    </div>
+    <p class="tagline">粘贴代码或上传文件 → 即时预览 → 导出干净网站</p>
+    <div class="header-actions">
+      <button id="btn-reset" class="btn btn-ghost" title="重置所有内容">重置</button>
+      <button id="btn-download" class="btn btn-primary" title="下载为 ZIP（无任何品牌水印）">下载网站 ZIP</button>
+      <button id="btn-newtab" class="btn btn-secondary" title="在新标签页打开预览">新窗口预览</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Left: Editors -->
+    <section class="editors">
+      <div class="tabs">
+        <button class="tab active" data-panel="html">HTML</button>
+        <button class="tab" data-panel="css">CSS</button>
+        <button class="tab" data-panel="js">JavaScript</button>
+        <button class="tab" data-panel="upload">上传文件</button>
+      </div>
+
+      <div class="panels">
+        <div class="panel active" id="panel-html">
+          <textarea id="html-code" placeholder="在此粘贴 HTML 代码…&#10;&#10;例如：&#10;&lt;h1&gt;你好世界&lt;/h1&gt;&#10;&lt;p&gt;这是我的网站&lt;/p&gt;" spellcheck="false"></textarea>
+        </div>
+        <div class="panel" id="panel-css">
+          <textarea id="css-code" placeholder="在此粘贴 CSS 代码…&#10;&#10;例如：&#10;body { font-family: system-ui; background: #0f172a; color: #e2e8f0; }" spellcheck="false"></textarea>
+        </div>
+        <div class="panel" id="panel-js">
+          <textarea id="js-code" placeholder="在此粘贴 JavaScript 代码…&#10;&#10;例如：&#10;document.querySelector('h1').addEventListener('click', () => alert('Hello!'));" spellcheck="false"></textarea>
+        </div>
+        <div class="panel" id="panel-upload">
+          <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📁</div>
+            <p>拖拽文件到此处，或点击选择</p>
+            <p class="upload-hint">支持 .html / .css / .js 文件，或包含这些文件的 .zip</p>
+            <input type="file" id="file-input" multiple accept=".html,.htm,.css,.js,.zip,text/html,text/css,application/javascript,application/zip">
+          </div>
+          <div id="file-list" class="file-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Preview -->
+    <section class="preview-section">
+      <div class="preview-header">
+        <span>实时预览</span>
+        <div class="preview-actions">
+          <button id="btn-refresh" class="btn btn-sm" title="刷新预览">刷新</button>
+          <label class="auto-run">
+            <input type="checkbox" id="auto-run" checked>
+            自动运行
+          </label>
+        </div>
+      </div>
+      <div class="preview-frame-wrapper">
+        <iframe id="preview" sandbox="allow-scripts allow-same-origin allow-modals allow-forms" title="预览"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>纯前端工具 · 代码仅在本地处理 · 导出的网站不含任何本站标识 · 可直接部署到 GitHub Pages</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
